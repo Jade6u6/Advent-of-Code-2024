@@ -3,9 +3,10 @@ import java.util.Collections;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class D1Historian_Hysteria {
-    public int answer(ArrayList<Integer> list1, ArrayList<Integer> list2)
+    public int Query1(ArrayList<Integer> list1, ArrayList<Integer> list2)
     {
         int ans = 0;
         Collections.sort(list1);
@@ -17,6 +18,26 @@ public class D1Historian_Hysteria {
                 ans += (list1.get(i) - list2.get(i));
             else
                 ans += (list2.get(i) - list1.get(i));
+        }
+        return ans;
+    }
+    public int Query2(ArrayList<Integer> query, ArrayList<Integer> answer)
+    {
+        int ans = 0, key = 0;
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i = 0; i<answer.size(); i++)
+        {
+            int count = 0;
+            key = answer.get(i);
+            if(map.containsKey(key))
+                count = map.get(key);
+            map.put(key,count+1);
+        }
+        for(int i = 0; i<query.size(); i++)
+        {
+            key = query.get(i);
+            if(map.containsKey(key))
+                ans += (key*map.get(key));
         }
         return ans;
     }
@@ -51,7 +72,8 @@ public class D1Historian_Hysteria {
             e.printStackTrace();
         }
         D1Historian_Hysteria historian = new D1Historian_Hysteria();
-        System.out.println(historian.answer(A,B));
+        System.out.println(historian.Query1(A,B));
+        System.out.println(historian.Query2(A,B));
     }
     
 }
